@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>For You — A Sunflower Surprise 🌻</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#0f1724;
+      --accent:#ffd34d;
+      --leaf:#2f8a4a;
+      --wrap:#6b3f28;
+      --paper:#fff7e6;
+      color-scheme: dark;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 700px at 10% 10%, rgba(255,211,77,0.06), transparent),
+                  radial-gradient(900px 500px at 90% 80%, rgba(255,95,109,0.04), transparent),
+                  linear-gradient(180deg,var(--bg) 0%, #071023 100%);
+      display:flex;align-items:center;justify-content:center; padding:24px;
+    }
+    .card{
+      width:min(980px,96vw);
+      max-width:980px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:18px;
+      box-shadow: 0 10px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+      padding:28px;
+      display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center;
+      backdrop-filter: blur(6px);
+    }
+    @media (max-width:880px){
+      .card{grid-template-columns:1fr;}
+    }
+
+    .message{
+      color: #eaf6ff;
+      padding:10px 6px;
+    }
+    h1{
+      margin:0 0 8px 0; font-size:34px; letter-spacing:-0.02em; line-height:1.05;
+      background: linear-gradient(90deg,#ffffff,#ffd34d 60%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    p.lead{margin:0 0 18px 0;font-size:16px;opacity:0.9}
+
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:#dceeff;font-weight:600;cursor:pointer;
+      transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#ffb347);color:#1b1a1a;border:0;box-shadow:0 6px 18px rgba(255,211,77,0.15)}
+
+    /* bouquet area */
+    .scene{
+      padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+      min-height:340px;
+    }
+
+    /* confetti hearts */
+    .heart{position:absolute;animation:floatUp linear infinite;opacity:0.95}
+    .heart svg{width:26px;height:26px}
+    .h1{left:8%;bottom:6%;animation-duration:6s}
+    .h2{left:36%;bottom:0%;animation-duration:5.2s}
+    .h3{left:68%;bottom:4%;animation-duration:6.8s}
+    .h4{left:82%;bottom:10%;animation-duration:5.6s}
+    @keyframes floatUp{0%{transform:translateY(0) rotate(0) scale(.9);opacity:0}10%{opacity:1}100%{transform:translateY(-360px) rotate(420deg) scale(1.05);opacity:0}}
+
+    /* sunflower bouquet (SVG sized) */
+    .bouquet{width:360px;height:360px}
+    .sunflower{transform-origin:center center;animation:gentle 6s ease-in-out infinite}
+    @keyframes gentle{0%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-6px) rotate(1deg)}100%{transform:translateY(0) rotate(-1deg)}}
+
+    /* ribbon flutter */
+    .ribbon{transform-origin:top left;animation:ribbon 1.8s ease-in-out infinite}
+    @keyframes ribbon{0%{transform:rotate(0)}50%{transform:rotate(-6deg)}100%{transform:rotate(0)}}
+
+    /* petals pop on load */
+    .petal{transform-origin:20px 20px;animation:pop .9s cubic-bezier(.2,.9,.2,1) both}
+    .petal:nth-child(1){animation-delay:.05s}
+    .petal:nth-child(2){animation-delay:.08s}
+    .petal:nth-child(3){animation-delay:.11s}
+    .petal:nth-child(4){animation-delay:.14s}
+    .petal:nth-child(5){animation-delay:.17s}
+    .petal:nth-child(6){animation-delay:.2s}
+    @keyframes pop{0%{transform:scale(.2)}100%{transform:scale(1)}}
+
+    footer{grid-column:1/-1;margin-top:8px;color:rgba(255,255,255,0.12);font-size:13px;text-align:center}
+
+    /* little sparkle */
+    .sparkle{position:absolute;right:12px;top:8px;font-size:12px;color:rgba(255,255,255,0.14)}
+
+    /* credit card - like note */
+    .note{
+      background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);font-size:13px;color:#cfe8ff
+    }
+
+  </style>
+</head>
+<body>
+  <main class="card" role="main">
+    <section class="message">
+      <h1>For you, my sunflower 🌻</h1>
+      <p class="lead">Scan the QR and this little surprise will bloom — a warm sunflower bouquet for my favorite person.</p>
+      <div class="btn-row">
+        <button class="btn primary" onclick="shareLove()">Open the bouquet</button>
+        <button class="btn" onclick="document.getElementById('note').scrollIntoView({behavior:'smooth'})">A little note</button>
+      </div>
+      <div style="height:14px"></div>
+      <div class="note" id="note">
+        <strong>How to use:</strong> Host this file (GitHub Pages / Netlify / Vercel / simple web host) and create a QR that links to it — or just open this file in your phone browser and scan from another device. Tip: If you want, change the message in the &lt;h1&gt; to her name.
+      </div>
+    </section>
+
+    <aside class="scene" aria-hidden="true">
+      <div class="sparkle">✨ Surprise</div>
+
+      <!-- floating hearts (confetti) -->
+      <div class="heart h1"> <svg viewBox="0 0 24 24" fill="#ffb3c1" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-9.2-6.4C-1.2 9.6 4.4 4 7.6 6.2 10 8 12 10.4 12 10.4s2-2.4 4.4-4.2C19.6 4 25.2 9.6 21.2 14.6 19 16.65 12 21 12 21z"/></svg></div>
+      <div class="heart h2"> <svg viewBox="0 0 24 24" fill="#ffd1a9" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-9.2-6.4C-1.2 9.6 4.4 4 7.6 6.2 10 8 12 10.4 12 10.4s2-2.4 4.4-4.2C19.6 4 25.2 9.6 21.2 14.6 19 16.65 12 21 12 21z"/></svg></div>
+      <div class="heart h3"> <svg viewBox="0 0 24 24" fill="#ffd34d" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-9.2-6.4C-1.2 9.6 4.4 4 7.6 6.2 10 8 12 10.4 12 10.4s2-2.4 4.4-4.2C19.6 4 25.2 9.6 21.2 14.6 19 16.65 12 21 12 21z"/></svg></div>
+      <div class="heart h4"> <svg viewBox="0 0 24 24" fill="#ffd6e0" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-9.2-6.4C-1.2 9.6 4.4 4 7.6 6.2 10 8 12 10.4 12 10.4s2-2.4 4.4-4.2C19.6 4 25.2 9.6 21.2 14.6 19 16.65 12 21 12 21z"/></svg></div>
+
+      <!-- bouquet (SVG) -->
+      <svg class="bouquet" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="petalGrad" x1="0" x2="1"><stop offset="0" stop-color="#ffd34d"/><stop offset="1" stop-color="#ffb347"/></linearGradient>
+          <radialGradient id="centerGrad" cx="50%" cy="50%"><stop offset="0" stop-color="#2b2b2b"/><stop offset="1" stop-color="#523d2a"/></radialGradient>
+        </defs>
+
+        <!-- stems -->
+        <g transform="translate(200,120)">
+          <g id="leaves">
+            <path d="M-40 140 C-80 80 -20 40 6 80 C30 116 -10 160 -40 140" fill="var(--leaf)" opacity="0.95"/>
+            <path d="M40 160 C80 100 20 60 -10 90 C-32 115 8 170 40 160" fill="var(--leaf)" opacity="0.95"/>
+          </g>
+
+          <g id="stems" fill="none" stroke="#2b7a46" stroke-width="8" stroke-linecap="round">
+            <path d="M0 80 C-6 120 -10 200 -6 260"/>
+            <path d="M20 80 C26 120 30 200 26 260"/>
+            <path d="M-20 80 C-26 120 -30 200 -26 260"/>
+          </g>
+
+          <!-- bouquet wrap -->
+          <g transform="translate(-80,230)">
+            <path d="M0 0 L160 0 L130 120 L30 120 Z" fill="var(--wrap)" stroke="#533726" stroke-width="2"/>
+            <rect x="24" y="14" width="72" height="10" rx="6" fill="#2b2b2b" opacity="0.06"/>
+            <g class="ribbon" transform="translate(40,28)">
+              <path d="M0 0 C8 -6 24 -6 32 0 C40 6 56 6 64 0 L68 6 C60 16 44 16 32 6 C22 -2 10 -2 0 6 Z" fill="#ff6f91"/>
+            </g>
+          </g>
+
+          <!-- tag -->
+          <g transform="translate(-20,320)">
+            <rect x="-8" y="0" width="140" height="60" rx="8" fill="var(--paper)" opacity="0.95"/>
+            <text x="8" y="24" style="font-size:14px;fill:#1b1a1a;font-weight:700">Just because —</text>
+            <text x="8" y="44" style="font-size:12px;fill:#4a4a4a">You brighten my days</text>
+          </g>
+
+          <!-- sunflowers cluster -->
+          <g transform="translate(0,40) scale(1)">
+            <!-- left sunflower -->
+            <g transform="translate(-90,20)" class="sunflower">
+              <circle cx="60" cy="60" r="25" fill="url(#centerGrad)" />
+              <!-- petals -->
+              <g>
+                <path class="petal" d="M60 60 L92 68 A36 36 0 0 1 92 52 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L92 52 A36 36 0 0 1 76 30 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L76 30 A36 36 0 0 1 52 32 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L52 32 A36 36 0 0 1 28 46 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L28 46 A36 36 0 0 1 30 74 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L30 74 A36 36 0 0 1 52 88 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L52 88 A36 36 0 0 1 76 90 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L76 90 A36 36 0 0 1 92 68 Z" fill="url(#petalGrad)"/>
+              </g>
+            </g>
+
+            <!-- center sunflower -->
+            <g transform="translate(-10,0)" class="sunflower">
+              <circle cx="140" cy="70" r="36" fill="url(#centerGrad)" />
+              <g>
+                <!-- many petals using rotate -->
+                <g transform="translate(140,70)">
+                  <!-- create 16 petals -->
+                  <!-- using JS not allowed inside SVG; instead replicated paths rotated -->
+                  <g>
+                    <!-- we'll create 16 petals with transforms -->
+                    <!-- petal base path -->
+                    <g fill="url(#petalGrad)" opacity="0.98">
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(0) translate(0,0)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(22.5)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(45)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(67.5)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(90)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(112.5)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(135)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(157.5)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(180)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(202.5)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(225)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(247.5)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(270)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(292.5)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(315)"/>
+                      <path class="petal" d="M-6 -36 C6 -44 26 -44 34 -30 C42 -16 30 -6 16 -8 C2 -10 -4 -16 -6 -36 Z" transform="rotate(337.5)"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+
+            <!-- right sunflower -->
+            <g transform="translate(110,20)" class="sunflower">
+              <circle cx="60" cy="60" r="22" fill="url(#centerGrad)" />
+              <g>
+                <path class="petal" d="M60 60 L92 68 A36 36 0 0 1 92 52 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L92 52 A36 36 0 0 1 76 30 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L76 30 A36 36 0 0 1 52 32 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L52 32 A36 36 0 0 1 28 46 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L28 46 A36 36 0 0 1 30 74 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L30 74 A36 36 0 0 1 52 88 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L52 88 A36 36 0 0 1 76 90 Z" fill="url(#petalGrad)"/>
+                <path class="petal" d="M60 60 L76 90 A36 36 0 0 1 92 68 Z" fill="url(#petalGrad)"/>
+              </g>
+            </g>
+
+          </g>
+        </g>
+      </svg>
+
+    </aside>
+
+    <footer>Open this page on your phone and scan the QR from another device — or host the file and share the URL as a QR.</footer>
+  </main>
+
+  <script>
+    function shareLove(){
+      // Smooth reveal: animate a simple scale pop on bouquet
+      const svgs = document.querySelectorAll('.bouquet');
+      svgs.forEach(s=>{
+        s.animate([{transform:'scale(.92)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:650,easing:'cubic-bezier(.2,.9,.2,1)'});
+      });
+      // briefly show a browser share if available
+      if(navigator.share){
+        navigator.share({title:'A little surprise for you',text:'Open this link to see your sunflower 💛',url:location.href}).catch(()=>{});
+      }
+    }
+
+    // Accessibility: let Enter on the primary button open
+    document.querySelector('.btn.primary').addEventListener('keydown', (e)=>{ if(e.key==='Enter') shareLove(); });
+  </script>
+</body>
+</html>
